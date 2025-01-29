@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="text-center mb-4">Admin Dashboard</h2>
+<a href="{{ url_for('create') }}" class="btn btn-success mb-3">Add Book</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Género</th>
+            <th>Año de Publicación</th>
+            <th>Calificación Promedio</th>
+            <th>Número de Páginas</th>
+            <th>Precio (USD)</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for book in books %}
+        <tr>
+            <td>{{ book.id }}</td>
+            <td>{{ book.title }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.genre }}</td>
+            <td>{{ book.year }}</td>
+            <td>{{ book.rating }}</td>
+            <td>{{ book.pages }}</td>
+            <td>${{ "%.2f" | format(book.price) }}</td>
+            <td>
+                <a href="{{ url_for('edit', id=book.id) }}" class="btn btn-warning btn-sm">Edit</a>
+                <form method="POST" action="{{ url_for('delete', id=book.id) }}" style="display:inline;">
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

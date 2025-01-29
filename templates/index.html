@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="text-center mb-4">Libros</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Género</th>
+            <th>Año de publicación</th>
+            <th>Calificación Promedio</th>
+            <th>Páginas</th>
+            <th>Precio (USD)</th>
+            {% if current_user.is_admin %}
+                <th>Actions</th>
+            {% endif %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for book in books %}
+        <tr>
+            <td>{{ book.id }}</td>
+            <td>{{ book.title }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.genre }}</td>
+            <td>{{ book.year }}</td>
+            <td>{{ book.rating }}</td>
+            <td>{{ book.pages }}</td>
+            <td>${{ "%.2f" | format(book.price) }}</td>
+        </tr>
+        {% endfor %}
+        {% if current_user.is_admin %}
+            <td>
+                <a href="{{ url_for('edit', id=book.id) }}" class="btn btn-sm btn-warning">Edit</a>
+                <form method="POST" action="{{ url_for('delete', id=book.id) }}" style="display:inline;">
+                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                </form>
+            </td>
+        {% endif %}
+    </tbody>
+</table>
+{% endblock %}

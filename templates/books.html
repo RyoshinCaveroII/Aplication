@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="text-center mb-4">Books</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Género</th>
+            <th>Año de Publicación</th>
+            <th>Calificación Promedio</th>
+            <th>Número de Páginas</th>
+            <th>Precio (USD)</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for book in books %}
+        <tr>
+            <td>{{ book.id }}</td>
+            <td>{{ book.title }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.genre }}</td>
+            <td>{{ book.year }}</td>
+            <td>{{ book.rating }}</td>
+            <td>{{ book.pages }}</td>
+            <td>${{ "%.2f" | format(book.price) }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
